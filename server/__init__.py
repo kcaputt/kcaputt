@@ -1,4 +1,5 @@
 from aiohttp import web
+import asyncio
 
 routes = web.RouteTableDef()
 
@@ -8,5 +9,6 @@ async def hello(request):
 
 app = web.Application()
 app.add_routes(routes)
-web.run_app(app)
-print("test")
+
+async def setup():
+    asyncio.get_event_loop().create_task(_run_app(app))
