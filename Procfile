@@ -1,1 +1,1 @@
-web everything.py
+web python3 ./everything.py
