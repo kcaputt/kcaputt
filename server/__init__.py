@@ -12,4 +12,4 @@ app = web.Application()
 app.add_routes(routes)
 
 async def setup():
-    asyncio.get_event_loop().create_task(web._run_app(app, path="localhost", port=os.environ['PORT']||3000))
+    asyncio.get_event_loop().create_task(web._run_app(app, path="localhost", port=os.environ["PORT"]))
