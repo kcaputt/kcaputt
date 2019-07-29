@@ -3,7 +3,7 @@ import asyncio
 
 routes = web.RouteTableDef()
 
-@routes.get('')
+@routes.get('/*')
 async def hello(request):
     return web.Response(text="Hello, world")
 
