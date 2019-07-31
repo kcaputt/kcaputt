@@ -22,7 +22,7 @@ class Tea(commands.Cog):
 		await sendembed(ctx, "Hey dad...", "Hi "+name+", I'm DAD!")
 
 def setup(bot):
-	bot.add_cog()
+	bot.add_cog(Tea(bot))
 	
 if __name__ == "__main__":
 	print("Please run this cog as a discord bot")
