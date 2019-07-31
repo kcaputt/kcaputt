@@ -19,7 +19,7 @@ class Tea(commands.Cog)
 		name = arg
 		for arg in args:
 			name = name + " " + arg
-		await sendembed(ctx, "Hey dad...", "Hi "++", I'm DAD!")
+		await sendembed(ctx, "Hey dad...", "Hi "+name+", I'm DAD!")
 
 def setup(bot):
 	bot.add_cog()
