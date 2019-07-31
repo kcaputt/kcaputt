@@ -12,7 +12,7 @@ class Tea(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
 		
-	@commands.command(name="dad i'm")
+	@commands.command(name="hi dad i'm")
 	async def dadjoke(self, ctx, arg, *args):
 		"""Tell me a dad joke 
 		(form: {prefix}dad i'm {all arguments})"""
@@ -22,7 +22,7 @@ class Tea(commands.Cog):
 		await sendembed(ctx, "Hey dad...", "Hi "+name+", I'm DAD!")
 
 def setup(bot):
-	bot.add_cog()
+	bot.add_cog(Tea(bot))
 	
 if __name__ == "__main__":
 	print("Please run this cog as a discord bot")
