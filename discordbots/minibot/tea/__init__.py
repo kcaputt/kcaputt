@@ -12,9 +12,10 @@ class Tea(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
 		
-	@commands.command(name="hi")
+	@commands.command(name="hi dad i'm", aliases=["hi"])
 	async def dadjoke(self, ctx, dad, im, arg, *args):
-		if dad != "dad" or im != "im"
+		if dad != "dad" or im != "im":
+			return
 		"""Tell me a dad joke 
 		(form: {prefix}hi dad i'm {all arguments})"""
 		name = arg
