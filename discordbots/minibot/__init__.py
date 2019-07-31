@@ -3,7 +3,7 @@ import asyncio
 import os
 
 extensions = [
-  "tea"
+  "discordbots.minibot.tea"
 ]
 async def setup():
   try:
