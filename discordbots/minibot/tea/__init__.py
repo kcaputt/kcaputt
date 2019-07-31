@@ -13,7 +13,7 @@ class Tea(commands.Cog):
 		self.bot = bot
 	
 	@commands.Cog.listener()
-	async def on_message(message):
+	async def on_message(self, message):
 		if message.content.lower().startswith("hi dad im "):
 			await sendembed(message.channel, "Hi "+message.content[10:]+", I'm DAD!")
 		if message.content.lower().startswith("hi dad i'm "):
