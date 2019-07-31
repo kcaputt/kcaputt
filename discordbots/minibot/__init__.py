@@ -13,7 +13,7 @@ async def setup():
         bot.load_extension(extension)
       except Exception as e:
         print("Failed to load "+str(extension)+"... \n>>> Full traceback is "+str(e))
-    bot.run(os.environ["MINIBOT_TOKEN"])
+    await bot.start(os.environ["MINIBOT_TOKEN"])
   except Exception as e:
     print("Running MiniBot failed... \n>>> Full traceback is "+str(e))
   
