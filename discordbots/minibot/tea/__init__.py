@@ -14,14 +14,14 @@ class Tea(commands.Cog):
 		
 	@commands.command(name="hi dad i'm", aliases=["hi"])
 	async def dadjoke(self, ctx, dad, im, arg, *args):
-		if dad != "dad" or im != "i'm":
+		if dad.lower() != "dad" or im.lower() != "i'm":
 			return
 		"""Tell me a dad joke 
 		(form: {prefix}hi dad i'm {all arguments})"""
 		name = arg
 		for arg in args:
 			name = name + " " + arg
-		await sendembed(ctx, "Hey dad...", "Hi "+name+", I'm DAD!")
+		await sendembed(ctx, "Hi "+name+", I'm DAD!")
 
 def setup(bot):
 	bot.add_cog(Tea(bot))
