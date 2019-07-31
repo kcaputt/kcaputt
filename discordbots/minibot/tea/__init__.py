@@ -14,7 +14,7 @@ class Tea(commands.Cog):
 		
 	@commands.command(name="hi dad i'm", aliases=["hi"])
 	async def dadjoke(self, ctx, dad, im, arg, *args):
-		if dad != "dad" or im != "im":
+		if dad != "dad" or im != "i'm":
 			return
 		"""Tell me a dad joke 
 		(form: {prefix}hi dad i'm {all arguments})"""
