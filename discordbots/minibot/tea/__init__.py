@@ -14,10 +14,10 @@ class Tea(commands.Cog):
 	
 	@bot.event
 	async def on_message(message):
-		if message.lower().startswith("hi dad im "):
-			await sendembed(ctx, "Hi "+message[10:]+", I'm DAD!")
-		if message.lower().startswith("hi dad i'm "):
-			await sendembed(ctx, "Hi "+message[11:]+", I'm DAD!")
+		if message.content.lower().startswith("hi dad im "):
+			await sendembed(ctx, "Hi "+message.content[10:]+", I'm DAD!")
+		if message.content.lower().startswith("hi dad i'm "):
+			await sendembed(ctx, "Hi "+message.content[11:]+", I'm DAD!")
 	@commands.command(name="hi dad i'm")
 	async def dadjoke(self, ctx):
 		"""Tell me a dad joke 
