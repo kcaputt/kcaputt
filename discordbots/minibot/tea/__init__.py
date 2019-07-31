@@ -8,7 +8,7 @@ async def sendembed(ctx, title, text=None, color=0x7289da):
 	embed.set_footer("Made By Minion3665")
 	await ctx.send(embed = embed)
 
-class Tea(commands.Cog)
+class Tea(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
 		
