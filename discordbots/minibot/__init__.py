@@ -2,6 +2,9 @@ from discord.ext import commands
 import asyncio
 import os
 
+extensions = [
+  "tea"
+]
 async def setup():
   try:
     bot = commands.Bot(command_prefix="mini")
