@@ -5,7 +5,4 @@ import server
 import discordbots
 
 loop = asyncio.get_event_loop()
-
-loop.create_task(server.setup())
-loop.create_task(discordbots.setup())
 loop.run_forever()
