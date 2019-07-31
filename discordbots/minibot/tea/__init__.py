@@ -11,17 +11,18 @@ async def sendembed(ctx, title, text=None, color=0x7289da):
 class Tea(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
-		
-	@commands.command(name="hi dad i'm", aliases=["hi"])
-	async def dadjoke(self, ctx, dad, im, arg, *args):
-		if dad.lower() != "dad" or im.lower() != "i'm":
-			return
+	
+	@bot.event
+	async def on_message(message):
+		if message.lower().startswith("hi dad im") or message.lower().startswith("hi dad i'm"):
+			name = arg
+			for arg in args:
+				name = name + " " + arg
+			await sendembed(ctx, "Hi "+name+", I'm DAD!")
+	@commands.command(name="hi dad i'm")
+	async def dadjoke(self, ctx):
 		"""Tell me a dad joke 
-		(form: {prefix}hi dad i'm {all arguments})"""
-		name = arg
-		for arg in args:
-			name = name + " " + arg
-		await sendembed(ctx, "Hi "+name+", I'm DAD!")
+		(form: hi dad i'm {all arguments} - do not use a prefix)"""
 
 def setup(bot):
 	bot.add_cog(Tea(bot))
