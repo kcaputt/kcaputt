@@ -1,5 +1,6 @@
 from aiohttp import web
 import asyncio
+import aiohttp_jinja2
 import os
 
 ## Define middlewares
