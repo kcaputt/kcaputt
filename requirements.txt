@@ -1,3 +1,4 @@
 aiohttp
+jinja2
 aiohttp-jinja2
 discord.py[voice]
