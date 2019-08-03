@@ -33,9 +33,9 @@ async def uptimetest(request):
 
 ## Define handle functions
 async def handle_404(request):
-    return aiohttp_jinja2.render_template('404.html', request, {})
+    return aiohttp_jinja2.render_template('server/public/404.html', request, {})
 async def handle_500(request):
-    return aiohttp_jinja2.render_template('500.html', request, {})
+    return aiohttp_jinja2.render_template('server/public/500.html', request, {})
 
 app = web.Application()
 
