@@ -13,11 +13,11 @@ async def hello(request):
 async def uptimetest(request):
     return web.Response(text="I'm Up!!!")
 
-@routes.get('/*')
+app = web.Application()
+@app.errorhandler(404)
 async def uptimetest(request):
     return web.Response(text="Page not found... <a href='https://kcaputt.herokuapp.com'>back to home</a>")
 
-app = web.Application()
 app.add_routes(routes)
 
 async def setup():
