@@ -26,8 +26,8 @@ class ActivityChecks(commands.Cog):
 	@commands.command(name="check")
 	async def check(self, ctx):
 		"""Start an activity check"""
-		activeRole = discord.utils.get(ctx.guild.members, name.lower()='active')
-		closedRole = discord.utils.get(ctx.guild.members, name.lower()='activity check closed')
+		activeRole = discord.utils.get(ctx.guild.members, name='active')
+		closedRole = discord.utils.get(ctx.guild.members, name='activity check closed')
 		activityCheckChannel = getCheckChannel(ctx)
 		if activeRole == None or closedRole == None or activityCheckChannel == None:
 			await sendembed(ctx, "Your server is incorrectly setup", "Please run the "+ctx.prefix+"setup command to setup your server again", 0xaa0000)
