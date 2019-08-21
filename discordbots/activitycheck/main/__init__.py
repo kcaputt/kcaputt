@@ -31,7 +31,7 @@ class ActivityChecks(commands.Cog):
 		closedRole = discord.utils.get(ctx.guild.members, name='Activity Check Closed')
 		activityCheckChannel = getCheckChannel(ctx);
 		if activeRole == None or closedRole == None or activityCheckChannel == None:
-			await sendembed(ctx, "Your server is incorrectly setup", "Please run the "+commands.command.prefix+"setup command to setup your server again", 0xaa0000)
+			await sendembed(ctx, "Your server is incorrectly setup", "Please run the "+commands.prefix+"setup command to setup your server again", 0xaa0000)
 			return
 
 def setup(bot):
