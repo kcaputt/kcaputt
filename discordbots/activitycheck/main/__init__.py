@@ -33,7 +33,7 @@ class ActivityChecks(commands.Cog):
 		if activeRole == None or closedRole == None or activityCheckChannel == None:
 			await sendembed(ctx, "Your server is incorrectly setup", "Please run the "+ctx.prefix+"setup command to setup your server again", 0xaa0000)
 			return
-		myResponseMessage = await sendembed(ctx, "Loading activity check", "This may take a while... This embed will turn green when I start... Once the check has started you can send `stop` to the channel to stop the check early. A bot admin can also stop/mass-stop the check early, for example if maintenance is needed on the bot.")
+		await myResponseMessage = sendembed(ctx, "Loading activity check", "This may take a while... This embed will turn green when I start... Once the check has started you can send `stop` to the channel to stop the check early. A bot admin can also stop/mass-stop the check early, for example if maintenance is needed on the bot.")
 		await asyncio.sleep(5)
 		newEmbed = myResponseMessage.embeds[0].copy()
 		newEmbed.color = 0x6cb83a
