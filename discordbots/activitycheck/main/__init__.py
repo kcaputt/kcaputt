@@ -26,13 +26,13 @@ class ActivityChecks(commands.Cog):
 	@commands.command(name="check")
 	async def check(self, ctx):
 		"""Start an activity check"""
-		await sendembed(ctx, "Loading activity check", "This may take a while... I will react to your message with ✅ when I start...")
-		activeRole = discord.utils.get(ctx.guild.members, name='Active')
-		closedRole = discord.utils.get(ctx.guild.members, name='Activity Check Closed')
-		activityCheckChannel = getCheckChannel(ctx);
+		activeRole = discord.utils.get(ctx.guild.members, name.lower()='active')
+		closedRole = discord.utils.get(ctx.guild.members, name.lower()='activity check closed')
+		activityCheckChannel = getCheckChannel(ctx)
 		if activeRole == None or closedRole == None or activityCheckChannel == None:
 			await sendembed(ctx, "Your server is incorrectly setup", "Please run the "+ctx.prefix+"setup command to setup your server again", 0xaa0000)
 			return
+		await sendembed(ctx, "Loading activity check", "This may take a while... I will react to your message with ✅ when I start... Once the check has started you can send `stop` to the channel to stop the check early. A bot admin can also stop/mass-stop the check early, for example if maintenance is needed on the bot.")
 
 def setup(bot):
 	bot.add_cog(ActivityChecks(bot))
