@@ -27,8 +27,8 @@ class ActivityChecks(commands.Cog):
 	@commands.command(name="check")
 	async def check(self, ctx):
 		"""Start an activity check"""
-		activeRole = discord.utils.get(ctx.guild.members, name='active')
-		closedRole = discord.utils.get(ctx.guild.members, name='activity check closed')
+		activeRole = discord.utils.get(ctx.guild.roles, name='active')
+		closedRole = discord.utils.get(ctx.guild.roles, name='activity check closed')
 		activityCheckChannel = getCheckChannel(ctx)
 		print("Server: "+str(ctx.guild.name)+", Active role: "+str(activeRole)+", Closed role: "+str(closedRole)+", Activity check channel "+str(activityCheckChannel))
 		if activeRole == None or closedRole == None or activityCheckChannel == None:
