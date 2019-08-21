@@ -10,7 +10,7 @@ async def sendembed(ctx, title, text=None, color=0x7289da):
 
 def getCheckChannel(ctx):
 	for channel in ctx.guild.channels:
-		if channel.isinstance(discord.TextChannel) and channel.topic.startswith("[activity]"):
+		if isinstance(channel, discord.TextChannel) and channel.topic.startswith("[activity]"):
 			return channel
 			
 			
