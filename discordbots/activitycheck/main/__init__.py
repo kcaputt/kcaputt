@@ -30,7 +30,7 @@ class ActivityChecks(commands.Cog):
 		closedRole = discord.utils.get(ctx.guild.members, name='activity check closed')
 		activityCheckChannel = getCheckChannel(ctx)
 		if activeRole == None or closedRole == None or activityCheckChannel == None:
-			await sendembed(ctx, "Your server is incorrectly setup", "Please run the "+ctx.prefix+"setup command to setup your server again", 0xaa0000)
+			await sendembed(ctx, "Your server is incorrectly setup", "Please run the "+ctx.prefix+"setup command to setup your server again\n\n`Debug info- AR: "+str(activeRole)+", CR: "+str(closedRole)+", ACC: "+str(activityCheckChannel)+"`", 0xaa0000)
 			return
 		await sendembed(ctx, "Loading activity check", "This may take a while... I will react to your message with ✅ when I start... Once the check has started you can send `stop` to the channel to stop the check early. A bot admin can also stop/mass-stop the check early, for example if maintenance is needed on the bot.")
 
