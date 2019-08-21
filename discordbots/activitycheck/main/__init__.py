@@ -10,7 +10,7 @@ async def sendembed(ctx, title, text=None, color=0x7289da):
 
 def getCheckChannel(ctx):
 	for channel in ctx.guild.channels:
-		if isinstance(channel, discord.TextChannel) and channel.topic.startswith("[activity]"):
+		if isinstance(channel, discord.TextChannel) and channel.topic != None and channel.topic.startswith("[activity]"):
 			return channel
 			
 			
@@ -26,12 +26,12 @@ class ActivityChecks(commands.Cog):
 	@commands.command(name="check")
 	async def check(self, ctx):
 		"""Start an activity check"""
-		await sendembed(ctx, "Loading activity check", "This may take a while... I will react to your message with ✅ when I start")
+		await sendembed(ctx, "Loading activity check", "This may take a while... I will react to your message with ✅ when I start...")
 		activeRole = discord.utils.get(ctx.guild.members, name='Active')
 		closedRole = discord.utils.get(ctx.guild.members, name='Activity Check Closed')
 		activityCheckChannel = getCheckChannel(ctx);
 		if activeRole == None or closedRole == None or activityCheckChannel == None:
-			await sendembed(ctx, "Your server is incorrectly setup", "Please run the "+bot.prefix+"setup command to setup your server again", 0xaa0000)
+			await sendembed(ctx, "Your server is incorrectly setup", "Please run the "+self.bot.prefix+"setup command to setup your server again", 0xaa0000)
 			return
 
 def setup(bot):
