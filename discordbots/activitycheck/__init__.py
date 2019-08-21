@@ -3,8 +3,8 @@ import asyncio
 import os
 
 extensions = [
-  "discordbots.activitycheck.main",
-	"discordbots.activitycheck.spy" # spying on the chromebook777 productions server and reporting back to the website. It's nothing bad- promise.
+	"discordbots.activitycheck.main",
+	#"discordbots.activitycheck.spy" # spying on the chromebook777 productions server and reporting back to the website. It's nothing bad- promise.
 ]
 async def setup():
   try:
