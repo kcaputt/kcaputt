@@ -12,6 +12,7 @@ def getCheckChannel(ctx):
 	for channel in ctx.guild.channels:
 		if isinstance(channel, discord.TextChannel) and channel.topic != None and channel.topic.startswith("[activity]"):
 			return channel
+	return None
 			
 			
 
@@ -29,6 +30,7 @@ class ActivityChecks(commands.Cog):
 		activeRole = discord.utils.get(ctx.guild.members, name='active')
 		closedRole = discord.utils.get(ctx.guild.members, name='activity check closed')
 		activityCheckChannel = getCheckChannel(ctx)
+		print("Server: "+str(ctx.guild.name)+", Active role: "+str(activeRole)+", Closed role: "+str(closedRole)+", Activity check channel "+str(activityCheckChannel))
 		if activeRole == None or closedRole == None or activityCheckChannel == None:
 			await sendembed(ctx, "Your server is incorrectly setup", "Please run the "+ctx.prefix+"setup command to setup your server again", 0xaa0000)
 			return
