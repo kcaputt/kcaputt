@@ -37,7 +37,7 @@ class ActivityChecks(commands.Cog):
 		if closedRole == None:
 			pass # Server isn't set up correctly
 
-	@commands.Cog.on_command_error()
+	@commands.Cog.cog_command_error()
 	async def on_command_error(self, ctx, error):
 		if isinstance(error, commands.MissingPermissions):
 			await sendEmbed(ctx, "Oops, we got an error", "**You don't seem to have enough permissions to run that command**\n\nAnd here is the error in person to tell you what it thinks...\n`"+str(error)+"`\n*(There- wasn't that just delightful)*")
