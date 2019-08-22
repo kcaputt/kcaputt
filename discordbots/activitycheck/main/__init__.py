@@ -120,7 +120,7 @@ class ActivityChecks(commands.Cog):
 		elif activeRole.position >= ctx.guild.me.top_role.position or closedRole.position >= ctx.guild.me.top_role.position:
 			await sendEmbed(ctx, "Your server is incorrectly setup", "It appears that you have `active` and/or `activity check closed` roles that I can't.. quite.. reach....... *puff puff*. Please move them down for me. Kthxbye", 0xaa0000)
 			return
-		elif not (activityCheckChannel.permissions_for(ctx.guild.me).send_messages and activityCheckChannel.permissions_for(ctx.guild.me).add_reactions and activityCheckChannel.permissions_for(ctx.guild.me).read_messages) and activityCheckChannel.permissions_for(ctx.guild.me).manage_messages):
+		elif not (activityCheckChannel.permissions_for(ctx.guild.me).send_messages and activityCheckChannel.permissions_for(ctx.guild.me).add_reactions and activityCheckChannel.permissions_for(ctx.guild.me).read_messages and activityCheckChannel.permissions_for(ctx.guild.me).manage_messages):
 			await sendEmbed(ctx, "Your server is incorrectly setup", "I... might not be allowed to do that. I don't really want to do anything that I don't have authorization for... Run "+ctx.prefix+"setup to grant me the correct permissions", 0xaa0000)
 			return
 		elif activityCheckChannel in activityCheckChannels:
