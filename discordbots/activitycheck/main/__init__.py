@@ -49,11 +49,13 @@ class ActivityChecks(commands.Cog):
 
 	async def cog_command_error(self, ctx, error):
 		if isinstance(error, commands.MissingPermissions):
-			await sendEmbed(ctx, "Oops, we got an error", "**You don't seem to have enough permissions to run that command**\n\nAnd here is the error in person to tell you what it thinks...\n`"+str(error)+"`\n*(There- wasn't that just delightful)*")
+			await sendEmbed(ctx, "Oops, we got an error", "**You don't seem to have enough permissions to run that command**\n\nAnd here is the error in person to tell you what it thinks...\n`"+str(error)+"`\n*(There- wasn't that just delightful)*", 0xaa0000)
 		elif isinstance(error, commands.BotMissingPermissions):
-			await sendEmbed(ctx, "Oops, we got an error", "**I don't seem to have enough permissions to run that command**\n\nAnd here is the error in person to tell you what it thinks...\n`"+str(error)+"`\n*(There- wasn't that just delightful)*")
+			await sendEmbed(ctx, "Oops, we got an error", "**I don't seem to have enough permissions to run that command**\n\nAnd here is the error in person to tell you what it thinks...\n`"+str(error)+"`\n*(There- wasn't that just delightful)*", 0xaa0000)
 		elif isinstance(error, commands.NoPrivateMessage):
-			await sendEmbed(ctx, "Oops, we got an error", "**You can't run this one in DMs**\n\nAnd here is the error in person to tell you what it thinks...\n`"+str(error)+"`\n*(There- wasn't that just delightful)*")
+			await sendEmbed(ctx, "Oops, we got an error", "**You can't run this one in DMs**\n\nAnd here is the error in person to tell you what it thinks...\n`"+str(error)+"`\n*(There- wasn't that just delightful)*", 0xaa0000)
+		else:
+			await sendEmbed(ctx, "Oops, we got an error", "Here it is in person to tell you what it thinks...\n`"+str(error)+"`\n*(There- wasn't that just delightful)*", 0xaa0000)
 	
 	@commands.command(name="setup")
 	@commands.guild_only()
