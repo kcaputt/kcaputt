@@ -67,17 +67,17 @@ class ActivityChecks(commands.Cog):
 		activeRole = discord.utils.get(ctx.guild.roles, name='active')
 		closedRole = discord.utils.get(ctx.guild.roles, name='activity check closed')
 		activityCheckChannel = getCheckChannel(ctx)
+		if activeRole == None:
+			updated.append("Active role created")
+			activeRole = await ctx.guild.create_role("active", reason="Setup command for the activity checks run by "+str(ctx.author))
+		if closedRole == None:
+			updated.append("Closed role created")
+			closedRole = await ctx.guild.create_role("activity check closed", reason="Setup command for the activity checks run by "+str(ctx.author))
 		if activeRole.position >= ctx.guild.me.top_role.position or closedRole.position >= ctx.guild.me.top_role.position:
 			await sendEmbed(ctx, "I couldn't setup permissions", "It appears that you have `active` and/or `activity check closed` roles that I can't.. quite.. reach....... *puff puff*. Please move them down for me. Kthxbye", 0xaa0000)
 			return
-		if activeRole == None:
-			updated.append("Active role updated")
-			activeRole = await ctx.guild.create_role("active", reason="Setup command for the activity checks run by "+str(ctx.author))
-		if closedRole == None:
-			updated.append("Closed role updated")
-			closedRole = await ctx.guild.create_role("activity check closed", reason="Setup command for the activity checks run by "+str(ctx.author))
 		if activityCheckChannel == None:
-			updated.append("Check channel updated")
+			updated.append("Check channel created")
 			overwrites = {
 				ctx.guild.default_role: discord.PermissionOverwrite(read_messages=True, send_messages=True, add_reactions=False),
 				activeRole: discord.PermissionOverwrite(read_messages=True, send_messages=False),
@@ -88,6 +88,7 @@ class ActivityChecks(commands.Cog):
 		elif not activityCheckChannel.permissions_for(ctx.guild.me).manage_channels or not activityCheckChannel.permissions_for(ctx.guild.me).manage_roles:
 			await sendEmbed(ctx, "I couldn't setup permissions", "It appears that you have denied me the `manage channels` or `manage permissions` permissions on the activity check channel... please undo that rn", 0xaa0000)
 		if not (activityCheckChannel.permissions_for(ctx.guild.me).send_messages and activityCheckChannel.permissions_for(ctx.guild.me).add_reactions and activityCheckChannel.permissions_for(ctx.guild.me).read_messages):
+			updated.append("Check channel permissions updated")
 			await message.channel.set_permissions(ctx.guild.me, discord.PermissionOverwrite(read_messages=True, send_messages=True, add_reactions=True))
 		description = str(len(updated))+" things had to be updated\n\nHere they are:\n"
 		if len(updated) == 0:
