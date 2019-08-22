@@ -27,8 +27,10 @@ def getCheckChannel(ctx):
 			return channel
 	return None
 
-def owner_or_has_perms(*permissions):
-	return commands.has_permissions(ctx, permissions) or commands.is_owner()
+def owner_or_has_perms(**perms):
+	async def predicate(ctx):
+		return commands.has_permissions.predicate(ctx) or commands.is_owner.predicate(ctx)
+	return commands.check(predicate)
 
 class ActivityChecks(commands.Cog):
 	def __init__(self, bot):
