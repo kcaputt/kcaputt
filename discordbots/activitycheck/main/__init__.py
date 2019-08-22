@@ -27,6 +27,9 @@ def getCheckChannel(ctx):
 			return channel
 	return None
 
+def owner_or_has_perms(*permissions):
+	return commands.has_permissions(ctx, permissions) or commands.is_owner()
+
 class ActivityChecks(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
@@ -47,7 +50,7 @@ class ActivityChecks(commands.Cog):
 	
 	@commands.command(name="setup")
 	@commands.guild_only()
-	@commands.has_permissions(manage_roles=True, manage_channels=True)
+	@owner_or_has_perms(manage_roles=True, manage_channels=True)
 	@commands.bot_has_permissions(manage_roles=True, manage_channels=True)
 	async def setup(self, ctx):
 		"""Setup your server for the bot"""
