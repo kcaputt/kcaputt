@@ -88,9 +88,9 @@ class ActivityChecks(commands.Cog):
 		elif not activityCheckChannel.permissions_for(ctx.guild.me).manage_channels or not activityCheckChannel.permissions_for(ctx.guild.me).manage_roles:
 			await sendEmbed(ctx, "I couldn't setup permissions", "It appears that you have denied me the `manage channels`, `read messages` or `manage permissions` permissions on the activity check channel... please undo that rn", 0xaa0000)
 			return
-		if not (activityCheckChannel.permissions_for(ctx.guild.me).send_messages and activityCheckChannel.permissions_for(ctx.guild.me).add_reactions and activityCheckChannel.permissions_for(ctx.guild.me).read_messages):
+		if not (activityCheckChannel.permissions_for(ctx.guild.me).send_messages and activityCheckChannel.permissions_for(ctx.guild.me).add_reactions and activityCheckChannel.permissions_for(ctx.guild.me).read_messages and activityCheckChannel.permissions_for(ctx.guild.me).manage_messages):
 			updated.append("Check channel permissions updated")
-			await activityCheckChannel.set_permissions(ctx.guild.me, read_messages=True, send_messages=True, add_reactions=True)
+			await activityCheckChannel.set_permissions(ctx.guild.me, manage_messages=True, read_messages=True, send_messages=True, add_reactions=True)
 		description = str(len(updated))+" things had to be updated\n\nHere they are:\n"
 		if len(updated) == 0:
 			description = "Nothing had to be updated\n"
@@ -120,8 +120,8 @@ class ActivityChecks(commands.Cog):
 		elif activeRole.position >= ctx.guild.me.top_role.position or closedRole.position >= ctx.guild.me.top_role.position:
 			await sendEmbed(ctx, "Your server is incorrectly setup", "It appears that you have `active` and/or `activity check closed` roles that I can't.. quite.. reach....... *puff puff*. Please move them down for me. Kthxbye", 0xaa0000)
 			return
-		elif not (activityCheckChannel.permissions_for(ctx.guild.me).send_messages and activityCheckChannel.permissions_for(ctx.guild.me).add_reactions and activityCheckChannel.permissions_for(ctx.guild.me).read_messages):
-			await sendEmbed(ctx, "Your server is incorrectly setup", "I... might not be allowed to do that. I don't really want to do anything that I don't have authorization for... Please can you make sure that I have `send messages`, `add reactions` and `read messages` permissions in "+activityCheckChannel.mention+" please.", 0xaa0000)
+		elif not (activityCheckChannel.permissions_for(ctx.guild.me).send_messages and activityCheckChannel.permissions_for(ctx.guild.me).add_reactions and activityCheckChannel.permissions_for(ctx.guild.me).read_messages) and activityCheckChannel.permissions_for(ctx.guild.me).manage_messages):
+			await sendEmbed(ctx, "Your server is incorrectly setup", "I... might not be allowed to do that. I don't really want to do anything that I don't have authorization for... Run "+ctx.prefix+"setup to grant me the correct permissions", 0xaa0000)
 			return
 		elif activityCheckChannel in activityCheckChannels:
 			await sendEmbed(ctx, "Your server is already running a check in this channel", "Wait till the current check is over or stop it by saying `stop` in the check channel if you started it before starting a new one", 0xaa0000)
