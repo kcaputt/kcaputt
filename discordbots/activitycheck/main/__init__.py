@@ -92,6 +92,7 @@ class ActivityChecks(commands.Cog):
 	@commands.bot_has_permissions(manage_roles=True)
 	async def check(self, ctx):
 		"""Start an activity check"""
+		checkStopped = False
 		activeRole = discord.utils.get(ctx.guild.roles, name='active')
 		closedRole = discord.utils.get(ctx.guild.roles, name='activity check closed')
 		activityCheckChannel = getCheckChannel(ctx)
@@ -104,27 +105,35 @@ class ActivityChecks(commands.Cog):
 		elif not (activityCheckChannel.permissions_for(ctx.guild.me).send_messages and activityCheckChannel.permissions_for(ctx.guild.me).add_reactions and activityCheckChannel.permissions_for(ctx.guild.me).read_messages):
 			await sendEmbed(ctx, "Your server is incorrectly setup", "I... might not be allowed to do that. I don't really want to do anything that I don't have authorization for... Please can you make sure that I have `send messages`, `add reactions` and `read messages` permissions in "+activityCheckChannel.mention+" please.", 0xaa0000)
 			return
+		elif activityCheckChannel in activityCheckChannels:
+			await sendEmbed(ctx, "Your server is already running a check in this channel", "Wait till the current check is over or stop it by saying `stop` in the check channel before starting a new one", 0xaa0000)
+			return
+		activityCheckChannels.append(activityCheckChannel)
 		myResponseMessage = await sendEmbed(ctx, "Loading activity check", "This may take a while... This embed will turn green when I start... Once the check has started you can send `stop` to the channel to stop the check early. A bot admin can also stop/mass-stop the check early, for example if maintenance is needed on the bot.")
 		for member in ctx.guild.members:
 			await member.remove_roles(activeRole, closedRole, reason="Activity Check Starting...")
 		await changeEmbedColor(myResponseMessage, 0x6cb83a)
 		await sendEmbed(activityCheckChannel, "Activity Check", "Type `me`. Nothing More. Nothing Less. All messages are due within 1 day of this being sent. I will react with ✅ if it worked.", message="@everyone")
 		timeout = time.time() + 60#*60*24
-		while time.time() <= timeout:
+		while time.time() <= timeout and not checkStopped:
 			msg = None
 			try:
 				msg = await self.bot.wait_for("message", check=lambda msg : msg.channel == activityCheckChannel, timeout=5)
 			except asyncio.TimeoutError:
 				pass
-			if msg != None and msg.content.lower() != "me" and msg.author != self.bot.user:
-				await msg.delete()
-			elif msg != None and msg.content.lower() == "me":
+			if msg != None and msg.content.lower() == "me":
 				await msg.author.add_roles(activeRole, reason="Proven activity in the activity check, well done!")
 				await msg.add_reaction('✅')
+			elif msg != None and msg.content.lower() == "stop" and (msg.author == ctx.author or self.bot.is_owner(msg.author)):
+				await sendEmbed(ctx, "Activity Check Over", "This activity check has been ended early by "+str(msg.author), 0xaa0000)
+				checkStopped = True
+			elif msg != None and msg.content.lower() != "me" and msg.author != self.bot.user:
+				await msg.delete()
 		if not shuttingDown:
 			for member in ctx.guild.members:
 				await member.add_roles(closedRole, reason="Activity Check Over, Well Done @active")
 			await sendEmbed(activityCheckChannel, "Activity check complete", "well done @active")
+		activityCheckChannels.remove(activityCheckChannel)
 
 def setup(bot):
 	bot.add_cog(ActivityChecks(bot))
