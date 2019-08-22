@@ -27,19 +27,25 @@ def getCheckChannel(ctx):
 			return channel
 	return None
 
-commands.Bot.on_command_error()
-async def test_error(ctx, error):
-	if isinstance(error, commands.MissingPermissions):
-		await sendEmbed(ctx, "Oops, we got an error", "**You don't seem to have enough permissions to run that command**\n\nAnd here is the error in person to tell you what it thinks...\n`"+str(error)+"`\n*(There- wasn't that just delightful)*")
-	elif isinstance(error, commands.BotMissingPermissions):
-		await sendEmbed(ctx, "Oops, we got an error", "**I don't seem to have enough permissions to run that command**\n\nAnd here is the error in person to tell you what it thinks...\n`"+str(error)+"`\n*(There- wasn't that just delightful)*")
-	elif isinstance(error, commands.NoPrivateMessage):
-		await sendEmbed(ctx, "Oops, we got an error", "**You can't run this one in DMs**\n\nAnd here is the error in person to tell you what it thinks...\n`"+str(error)+"`\n*(There- wasn't that just delightful)*")
-
 class ActivityChecks(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
-		
+	
+	@commands.listen()
+	async def on_member_join(self, member):
+		closedRole = discord.utils.get(ctx.guild.roles, name='activity check closed')
+		if closedRole == None:
+			pass # Server isn't set up correctly
+
+	@commands.listen()
+	async def on_command_error(self, ctx, error):
+		if isinstance(error, commands.MissingPermissions):
+			await sendEmbed(ctx, "Oops, we got an error", "**You don't seem to have enough permissions to run that command**\n\nAnd here is the error in person to tell you what it thinks...\n`"+str(error)+"`\n*(There- wasn't that just delightful)*")
+		elif isinstance(error, commands.BotMissingPermissions):
+			await sendEmbed(ctx, "Oops, we got an error", "**I don't seem to have enough permissions to run that command**\n\nAnd here is the error in person to tell you what it thinks...\n`"+str(error)+"`\n*(There- wasn't that just delightful)*")
+		elif isinstance(error, commands.NoPrivateMessage):
+			await sendEmbed(ctx, "Oops, we got an error", "**You can't run this one in DMs**\n\nAnd here is the error in person to tell you what it thinks...\n`"+str(error)+"`\n*(There- wasn't that just delightful)*")
+	
 	@commands.command(name="setup")
 	@commands.guild_only()
 	@commands.has_permissions(manage_roles=True, manage_channels=True)
