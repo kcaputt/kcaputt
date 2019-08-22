@@ -51,7 +51,7 @@ class ActivityChecks(commands.Cog):
 			await member.remove_roles(activeRole, closedRole, reason="Activity Check Starting...")
 		await changeEmbedColor(myResponseMessage, 0x6cb83a)
 		await sendEmbed(activityCheckChannel, "Activity Check", "Type `me`. Nothing More. Nothing Less. All messages are due within 1 day of this being sent. I will react with ✅ if it worked.", message="@everyone")
-		timeout = time.time() + 60*60*24
+		timeout = time.time() + 60#*60*24
 		while time.time() <= timeout:
 			msg = await client.wait_for_message(channel=channel, timeout=5)
 			if msg != None and msg.content.lower() != "me" and msg.author != client.user:
@@ -59,10 +59,10 @@ class ActivityChecks(commands.Cog):
 			elif msg != None and msg.content.lower() == "me":
 				await msg.author.add_roles(activeRole, reason="Proven activity in the activity check, well done!")
 				await msg.add_reaction('✅')
-		if !shuttingDown:
-		for member in x:
-			await member.add_roles(closedRole, reason="Activity Check Over, Well Done @active")
-			await client.send_message(channel, "Activity check complete. well done `@active`")
+		if not shuttingDown:
+			for member in x:
+				await member.add_roles(closedRole, reason="Activity Check Over, Well Done @active")
+				await sendEmbed(activityCheckChannel, "Activity check complete", "well done @active")
 
 def setup(bot):
 	bot.add_cog(ActivityChecks(bot))
