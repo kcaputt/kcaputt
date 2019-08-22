@@ -27,11 +27,7 @@ def getCheckChannel(ctx):
 			return channel
 	return None
 
-class ActivityChecks(commands.Cog):
-	def __init__(self, bot):
-		self.bot = bot
-
-	@commands.on_command_error()
+commands.Bot.on_command_error()
 	async def test_error(ctx, error):
 		if isinstance(error, commands.MissingPermissions):
 			await sendEmbed(ctx, "Oops, we got an error", "**You don't seem to have enough permissions to run that command**\n\nAnd here is the error in person to tell you what it thinks...\n`"+str(error)+"`\n*(There- wasn't that just delightful)*")
@@ -39,6 +35,10 @@ class ActivityChecks(commands.Cog):
 			await sendEmbed(ctx, "Oops, we got an error", "**I don't seem to have enough permissions to run that command**\n\nAnd here is the error in person to tell you what it thinks...\n`"+str(error)+"`\n*(There- wasn't that just delightful)*")
 		elif isinstance(error, commands.NoPrivateMessage):
 			await sendEmbed(ctx, "Oops, we got an error", "**You can't run this one in DMs**\n\nAnd here is the error in person to tell you what it thinks...\n`"+str(error)+"`\n*(There- wasn't that just delightful)*")
+
+class ActivityChecks(commands.Cog):
+	def __init__(self, bot):
+		self.bot = bot
 		
 	@commands.command(name="setup")
 	@commands.guild_only()
