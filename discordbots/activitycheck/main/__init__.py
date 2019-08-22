@@ -2,6 +2,10 @@ from discord.ext import commands
 import discord
 import os
 import asyncio
+import time
+
+shuttingDown = False
+activityCheckChannels = []
 
 async def sendEmbed(ctx, title, text=None, color=0x7289da, message=""):
 	embed = discord.Embed(title = title, description = text, color = color)
@@ -45,8 +49,20 @@ class ActivityChecks(commands.Cog):
 		myResponseMessage = await sendEmbed(ctx, "Loading activity check", "This may take a while... This embed will turn green when I start... Once the check has started you can send `stop` to the channel to stop the check early. A bot admin can also stop/mass-stop the check early, for example if maintenance is needed on the bot.")
 		for member in ctx.guild.members:
 			await member.remove_roles(activeRole, closedRole, reason="Activity Check Starting...")
+		await changeEmbedColor(myResponseMessage, 0x6cb83a)
 		await sendEmbed(activityCheckChannel, "Activity Check", "Type `me`. Nothing More. Nothing Less. All messages are due within 1 day of this being sent. I will react with ✅ if it worked.", message="@everyone")
-		changeEmbedColor(myResponseMessage, 0x6cb83a)
+		timeout = time.time() + 60*60*24
+		while time.time() <= timeout:
+			msg = await client.wait_for_message(channel=channel, timeout=5)
+			if msg != None and msg.content.lower() != "me" and msg.author != client.user:
+				await msg.delete()
+			elif msg != None and msg.content.lower() == "me":
+				await msg.author.add_roles(activeRole, reason="Proven activity in the activity check, well done!")
+				await msg.add_reaction('✅')
+		if !shuttingDown:
+		for member in x:
+			await member.add_roles(closedRole, reason="Activity Check Over, Well Done @active")
+			await client.send_message(channel, "Activity check complete. well done `@active`")
 
 def setup(bot):
 	bot.add_cog(ActivityChecks(bot))
