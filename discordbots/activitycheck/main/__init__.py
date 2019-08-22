@@ -6,7 +6,7 @@ import asyncio
 async def sendembed(ctx, title, text=None, color=0x7289da):
 	embed = discord.Embed(title = title, description = text, color = color)
 	embed.set_footer(text = "Made By Minion3665")
-	await ctx.send(embed = embed)
+	return await ctx.send(embed = embed)
 
 def getCheckChannel(ctx):
 	for channel in ctx.guild.channels:
