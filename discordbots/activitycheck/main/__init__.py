@@ -106,7 +106,7 @@ class ActivityChecks(commands.Cog):
 			await sendEmbed(ctx, "Your server is incorrectly setup", "I... might not be allowed to do that. I don't really want to do anything that I don't have authorization for... Please can you make sure that I have `send messages`, `add reactions` and `read messages` permissions in "+activityCheckChannel.mention+" please.", 0xaa0000)
 			return
 		elif activityCheckChannel in activityCheckChannels:
-			await sendEmbed(ctx, "Your server is already running a check in this channel", "Wait till the current check is over or stop it by saying `stop` in the check channel before starting a new one", 0xaa0000)
+			await sendEmbed(ctx, "Your server is already running a check in this channel", "Wait till the current check is over or stop it by saying `stop` in the check channel if you started it before starting a new one", 0xaa0000)
 			return
 		activityCheckChannels.append(activityCheckChannel)
 		myResponseMessage = await sendEmbed(ctx, "Loading activity check", "This may take a while... This embed will turn green when I start... Once the check has started you can send `stop` to the channel to stop the check early. A bot admin can also stop/mass-stop the check early, for example if maintenance is needed on the bot.")
@@ -125,15 +125,16 @@ class ActivityChecks(commands.Cog):
 				await msg.author.add_roles(activeRole, reason="Proven activity in the activity check, well done!")
 				await msg.add_reaction('✅')
 			elif msg != None and msg.content.lower() == "stop" and (msg.author == ctx.author or self.bot.is_owner(msg.author)):
+				activityCheckChannels.remove(activityCheckChannel)
 				await sendEmbed(msg.channel, "Activity Check Over", "This activity check has been ended early by "+str(msg.author), 0xaa0000)
 				checkStopped = True
 			elif msg != None and msg.content.lower() != "me" and msg.author != self.bot.user:
 				await msg.delete()
+		activityCheckChannels.remove(activityCheckChannel)
 		if not shuttingDown:
 			for member in ctx.guild.members:
 				await member.add_roles(closedRole, reason="Activity Check Over, Well Done @active")
 			await sendEmbed(activityCheckChannel, "Activity check complete", "well done @active")
-		activityCheckChannels.remove(activityCheckChannel)
 
 def setup(bot):
 	bot.add_cog(ActivityChecks(bot))
