@@ -66,7 +66,7 @@ class ActivityChecks(commands.Cog):
 		if not shuttingDown:
 			for member in ctx.guild.members:
 				await member.add_roles(closedRole, reason="Activity Check Over, Well Done @active")
-				await sendEmbed(activityCheckChannel, "Activity check complete", "well done @active")
+			await sendEmbed(activityCheckChannel, "Activity check complete", "well done @active")
 
 def setup(bot):
 	bot.add_cog(ActivityChecks(bot))
