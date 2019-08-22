@@ -53,7 +53,11 @@ class ActivityChecks(commands.Cog):
 		await sendEmbed(activityCheckChannel, "Activity Check", "Type `me`. Nothing More. Nothing Less. All messages are due within 1 day of this being sent. I will react with ✅ if it worked.", message="@everyone")
 		timeout = time.time() + 60#*60*24
 		while time.time() <= timeout:
-			msg = await self.bot.wait_for("message", check=lambda msg : msg.channel == activityCheckChannel, timeout=5)
+			msg = None
+			try:
+				msg = await self.bot.wait_for("message", check=lambda msg : msg.channel == activityCheckChannel, timeout=5)
+			except asyncio.TimeoutError:
+				pass
 			if msg != None and msg.content.lower() != "me" and msg.author != client.user:
 				await msg.delete()
 			elif msg != None and msg.content.lower() == "me":
