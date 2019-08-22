@@ -70,7 +70,7 @@ class ActivityChecks(commands.Cog):
 				msg = await self.bot.wait_for("message", check=lambda msg : msg.channel == activityCheckChannel, timeout=5)
 			except asyncio.TimeoutError:
 				pass
-			if msg != None and msg.content.lower() != "me" and msg.author != client.user:
+			if msg != None and msg.content.lower() != "me" and msg.author != self.bot.user:
 				await msg.delete()
 			elif msg != None and msg.content.lower() == "me":
 				await msg.author.add_roles(activeRole, reason="Proven activity in the activity check, well done!")
