@@ -78,7 +78,7 @@ class ActivityChecks(commands.Cog):
 			description = "Nothing had to be updated\n"
 		for item in updated:
 			description = description + "○ " + item + "\n"
-		description = description + "\n\n**What can I do to ensure that things are correctly **\n○ You *can* change the channel name and topic but ensure that the topic always starts with `[activity]`\n○ You *can* change role permissions or move roles but ensure that I am always above the `active` and `activity check closed` role\n○You *should not* deny me permissions on the activity check channel"
+		description = description + "\n\n**What can I do to ensure that things remain correctly setup?**\n○ You *can* change the channel name and topic but ensure that the topic always starts with `[activity]`\n○ You *can* change role permissions or move roles but ensure that I am always above the `active` and `activity check closed` role\n○You *should not* deny me permissions on the activity check channel"
 		for member in ctx.guild.members:
 				await member.add_roles(closedRole, reason="Setup command for the activity checks run by "+str(ctx.author))
 		await sendEmbed(ctx, "Server setup finished!", description, 0x6cb83a)
