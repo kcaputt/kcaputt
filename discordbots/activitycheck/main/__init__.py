@@ -142,7 +142,7 @@ class ActivityChecks(commands.Cog):
 			if msg != None and msg.content.lower() == "me":
 				await msg.author.add_roles(activeRole, reason="Proven activity in the activity check, well done!")
 				await msg.add_reaction('✅')
-			elif (msg != None and msg.content.lower() == "stop" and msg.author == ctx.author) or (msg != None and msg.content.lower() == "stop" and self.bot.is_owner(msg.author)):
+			elif (msg != None and msg.content.lower() == "stop" and (msg.author == ctx.author or await self.bot.is_owner(msg.author)):
 				await sendEmbed(msg.channel, "Activity Check Over", "This activity check has been ended early by "+str(msg.author), 0xaa0000)
 				checkStopped = True
 			elif msg != None and msg.content.lower() != "me" and msg.author != self.bot.user:
