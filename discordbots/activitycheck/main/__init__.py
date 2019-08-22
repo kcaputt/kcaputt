@@ -114,7 +114,7 @@ class ActivityChecks(commands.Cog):
 			await member.remove_roles(activeRole, closedRole, reason="Activity Check Starting...")
 		await changeEmbedColor(myResponseMessage, 0x6cb83a)
 		await sendEmbed(activityCheckChannel, "Activity Check", "Type `me`. Nothing More. Nothing Less. All messages are due within 1 day of this being sent. I will react with ✅ if it worked.", message="@everyone")
-		timeout = time.time() + 60#*60*24
+		timeout = time.time() + 60*60*24
 		while time.time() <= timeout and not checkStopped:
 			msg = None
 			try:
@@ -125,7 +125,7 @@ class ActivityChecks(commands.Cog):
 				await msg.author.add_roles(activeRole, reason="Proven activity in the activity check, well done!")
 				await msg.add_reaction('✅')
 			elif msg != None and msg.content.lower() == "stop" and (msg.author == ctx.author or self.bot.is_owner(msg.author)):
-				await sendEmbed(ctx, "Activity Check Over", "This activity check has been ended early by "+str(msg.author), 0xaa0000)
+				await sendEmbed(msg.channel, "Activity Check Over", "This activity check has been ended early by "+str(msg.author), 0xaa0000)
 				checkStopped = True
 			elif msg != None and msg.content.lower() != "me" and msg.author != self.bot.user:
 				await msg.delete()
