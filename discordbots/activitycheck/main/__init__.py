@@ -29,7 +29,12 @@ def getCheckChannel(ctx):
 
 def owner_or_has_perms(**perms):
 	async def predicate(ctx):
-		return commands.has_permissions.predicate(ctx) or commands.is_owner.predicate(ctx)
+		ch = ctx.channel
+		permissions = ch.permissions_for(ctx.author)
+		missing = [perm for perm, value in perms.items() if getattr(permissions, perm, None) != value]
+		if not missing or ctx.bot.is_owner(ctx.author):
+			return True
+		raise commands.MissingPermissions(missing)
 	return commands.check(predicate)
 
 class ActivityChecks(commands.Cog):
@@ -52,7 +57,7 @@ class ActivityChecks(commands.Cog):
 	
 	@commands.command(name="setup")
 	@commands.guild_only()
-	@owner_or_has_perms(manage_roles=True, manage_channels=True)
+	@has_permsissions(manage_roles=True, manage_channels=True)
 	@commands.bot_has_permissions(manage_roles=True, manage_channels=True)
 	async def setup(self, ctx):
 		"""Setup your server for the bot"""
@@ -93,7 +98,7 @@ class ActivityChecks(commands.Cog):
 			
 		
 	@commands.command(name="check")
-	@commands.has_permissions(manage_roles=True)
+	@has_permsissions(manage_roles=True)
 	@commands.bot_has_permissions(manage_roles=True)
 	async def check(self, ctx):
 		"""Start an activity check"""
