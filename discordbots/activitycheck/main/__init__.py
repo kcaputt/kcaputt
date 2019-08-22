@@ -69,10 +69,10 @@ class ActivityChecks(commands.Cog):
 		activityCheckChannel = getCheckChannel(ctx)
 		if activeRole == None:
 			updated.append("Active role created")
-			activeRole = await ctx.guild.create_role("active", reason="Setup command for the activity checks run by "+str(ctx.author))
+			activeRole = await ctx.guild.create_role(name="active", reason="Setup command for the activity checks run by "+str(ctx.author))
 		if closedRole == None:
 			updated.append("Closed role created")
-			closedRole = await ctx.guild.create_role("activity check closed", reason="Setup command for the activity checks run by "+str(ctx.author))
+			closedRole = await ctx.guild.create_role(name="activity check closed", reason="Setup command for the activity checks run by "+str(ctx.author))
 		if activeRole.position >= ctx.guild.me.top_role.position or closedRole.position >= ctx.guild.me.top_role.position:
 			await sendEmbed(ctx, "I couldn't setup permissions", "It appears that you have `active` and/or `activity check closed` roles that I can't.. quite.. reach....... *puff puff*. Please move them down for me. Kthxbye", 0xaa0000)
 			return
