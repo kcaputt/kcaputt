@@ -90,7 +90,7 @@ class ActivityChecks(commands.Cog):
 			return
 		if not (activityCheckChannel.permissions_for(ctx.guild.me).send_messages and activityCheckChannel.permissions_for(ctx.guild.me).add_reactions and activityCheckChannel.permissions_for(ctx.guild.me).read_messages):
 			updated.append("Check channel permissions updated")
-			await ctx.channel.set_permissions(ctx.guild.me, discord.PermissionOverwrite(read_messages=True, send_messages=True, add_reactions=True))
+			await ctx.channel.set_permissions(ctx.guild.me, overwrite = discord.PermissionOverwrite(read_messages=True, send_messages=True, add_reactions=True))
 		description = str(len(updated))+" things had to be updated\n\nHere they are:\n"
 		if len(updated) == 0:
 			description = "Nothing had to be updated\n"
