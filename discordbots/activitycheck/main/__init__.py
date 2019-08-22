@@ -55,6 +55,9 @@ class ActivityChecks(commands.Cog):
 		activeRole = discord.utils.get(ctx.guild.roles, name='active')
 		closedRole = discord.utils.get(ctx.guild.roles, name='activity check closed')
 		activityCheckChannel = getCheckChannel(ctx)
+		if activeRole.position >= ctx.guild.me.top_role.position or closedRole.position >= ctx.guild.me.top_role.position:
+			await sendEmbed(ctx, "I couldn't setup permissions", "It appears that you have `active` and/or `activity check closed` roles that I can't.. quite.. reach....... *puff puff*. Please move them down for me. Kthxbye", 0xaa0000)
+			return
 		if activeRole == None:
 			updated.append("Active role updated")
 			activeRole = await ctx.guild.create_role("active", reason="Setup command for the activity checks run by "+str(ctx.author))
@@ -94,7 +97,7 @@ class ActivityChecks(commands.Cog):
 			await sendEmbed(ctx, "Your server is incorrectly setup", "Please run the "+ctx.prefix+"setup command to setup your server again", 0xaa0000)
 			return
 		elif activeRole.position >= ctx.guild.me.top_role.position or closedRole.position >= ctx.guild.me.top_role.position:
-			await sendEmbed(ctx, "Your server is incorrectly setup", "It appears that you have `active` and `activity check closed` roles that I can't.. quite.. reach....... *puff puff*. Please move them down for me. Kthxbye", 0xaa0000)
+			await sendEmbed(ctx, "Your server is incorrectly setup", "It appears that you have `active` and/or `activity check closed` roles that I can't.. quite.. reach....... *puff puff*. Please move them down for me. Kthxbye", 0xaa0000)
 			return
 		elif not (activityCheckChannel.permissions_for(ctx.guild.me).send_messages and activityCheckChannel.permissions_for(ctx.guild.me).add_reactions and activityCheckChannel.permissions_for(ctx.guild.me).read_messages):
 			await sendEmbed(ctx, "Your server is incorrectly setup", "I... might not be allowed to do that. I don't really want to do anything that I don't have authorization for... Please can you make sure that I have `send messages`, `add reactions` and `read messages` permissions in "+activityCheckChannel.mention+" please.", 0xaa0000)
