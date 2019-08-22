@@ -64,7 +64,7 @@ class ActivityChecks(commands.Cog):
 				await msg.author.add_roles(activeRole, reason="Proven activity in the activity check, well done!")
 				await msg.add_reaction('✅')
 		if not shuttingDown:
-			for member in x:
+			for member in ctx.guild.members:
 				await member.add_roles(closedRole, reason="Activity Check Over, Well Done @active")
 				await sendEmbed(activityCheckChannel, "Activity check complete", "well done @active")
 
