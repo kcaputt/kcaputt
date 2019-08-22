@@ -31,13 +31,13 @@ class ActivityChecks(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
 	
-	@commands.listen()
+	@commands.Cog.listener()
 	async def on_member_join(self, member):
 		closedRole = discord.utils.get(ctx.guild.roles, name='activity check closed')
 		if closedRole == None:
 			pass # Server isn't set up correctly
 
-	@commands.listen()
+	@commands.Cog.on_command_error()
 	async def on_command_error(self, ctx, error):
 		if isinstance(error, commands.MissingPermissions):
 			await sendEmbed(ctx, "Oops, we got an error", "**You don't seem to have enough permissions to run that command**\n\nAnd here is the error in person to tell you what it thinks...\n`"+str(error)+"`\n*(There- wasn't that just delightful)*")
