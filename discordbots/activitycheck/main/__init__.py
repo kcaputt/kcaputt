@@ -43,9 +43,10 @@ class ActivityChecks(commands.Cog):
 	
 	@commands.Cog.listener()
 	async def on_member_join(self, member):
-		closedRole = discord.utils.get(ctx.guild.roles, name='activity check closed')
+		closedRole = discord.utils.get(member.guild.roles, name='activity check closed')
 		if closedRole == None:
-			pass # Server isn't set up correctly
+			return # Server isn't set up correctly
+		await member.add_roles(closedRole, reason="Member joined guild- adding activity check closed role")
 
 	async def cog_command_error(self, ctx, error):
 		if isinstance(error, commands.MissingPermissions):
