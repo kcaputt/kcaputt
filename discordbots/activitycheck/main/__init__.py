@@ -108,7 +108,9 @@ class ActivityChecks(commands.Cog):
 			if not member.bot and not closedRole in member.roles:
 				addRoleCount = addRoleCount + 1
 				await member.add_roles(closedRole, reason="Setup command for the activity checks run by "+str(ctx.author))
-		if addRoleCount != 0:
+		if addRoleCount == 1:
+			updated.append("Added the 'activity check closed' role to "+str(addRoleCount)+" member")
+		elif addRoleCount != 0:
 			updated.append("Added the 'activity check closed' role to "+str(addRoleCount)+" members")
 		description = str(len(updated))+" things had to be updated\n\nHere they are:\n"
 		if len(updated) == 0:
