@@ -115,6 +115,8 @@ class ActivityChecks(commands.Cog):
 		description = str(len(updated))+" things had to be updated\n\nHere they are:\n"
 		if len(updated) == 0:
 			description = "Nothing had to be updated\n"
+		elif len(updated) == 1:
+			description = str(len(updated))+" thing had to be updated\n\nHere they are:\n"
 		for item in updated:
 			description = description + "○ " + item + "\n"
 		description = description + "\n\n**What can I do to ensure that things remain correctly setup?**\n○ You *can* change the channel name and topic but ensure that the topic always starts with `[activity]`\n○ You *can* change role permissions or move roles but ensure that I am always above the `active` and `activity check closed` role\n○You *should not* deny me permissions on the activity check channel"
