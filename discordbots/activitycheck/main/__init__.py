@@ -23,7 +23,7 @@ async def editEmbed(message, title=None, text=None, color=None):
 	if title != None:
 		newEmbed.title = title
 	if text != None:
-		newEmbed.text = text
+		newEmbed.description = text
 	await message.edit(embed = newEmbed)
 
 def getCheckChannel(ctx):
@@ -76,6 +76,9 @@ class ActivityChecks(commands.Cog):
 		closedRole = discord.utils.get(ctx.guild.roles, name='activity check closed')
 		activityCheckChannel = getCheckChannel(ctx)
 		statusEmbed = await sendEmbed(ctx, "Setting up your server", "Please be patient, this may take a while particularly if you have a lot of members. I will edit this embed with the status when I am done.")
+		if activityCheckChannel in activityCheckChannels:
+			await editEmbed(statusEmbed, "Your server is running a check", "Wait till the current check is over or stop it by saying `stop` in the check channel if you started it before trying to setup your server (or remove `[activity]` from the start of the "+activityCheckChannel.mention+" topic)", 0xaa0000)
+			return
 		if activeRole == None:
 			updated.append("Active role created")
 			activeRole = await ctx.guild.create_role(name="active", reason="Setup command for the activity checks run by "+str(ctx.author))
@@ -100,15 +103,19 @@ class ActivityChecks(commands.Cog):
 		if not (activityCheckChannel.permissions_for(ctx.guild.me).send_messages and activityCheckChannel.permissions_for(ctx.guild.me).add_reactions and activityCheckChannel.permissions_for(ctx.guild.me).read_messages and activityCheckChannel.permissions_for(ctx.guild.me).manage_messages):
 			updated.append("Check channel permissions updated")
 			await activityCheckChannel.set_permissions(ctx.guild.me, manage_messages=True, read_messages=True, send_messages=True, add_reactions=True)
+		addRoleCount = 0
+		for member in ctx.guild.members:
+			if not member.bot and not closedRole in member.roles:
+				addRoleCount = addRoleCount + 1
+				await member.add_roles(closedRole, reason="Setup command for the activity checks run by "+str(ctx.author))
+		if addRoleCount != 0:
+			updated.append("Added the 'activity check closed' role to "+str(addRoleCount)+" members")
 		description = str(len(updated))+" things had to be updated\n\nHere they are:\n"
 		if len(updated) == 0:
 			description = "Nothing had to be updated\n"
 		for item in updated:
 			description = description + "○ " + item + "\n"
 		description = description + "\n\n**What can I do to ensure that things remain correctly setup?**\n○ You *can* change the channel name and topic but ensure that the topic always starts with `[activity]`\n○ You *can* change role permissions or move roles but ensure that I am always above the `active` and `activity check closed` role\n○You *should not* deny me permissions on the activity check channel"
-		for member in ctx.guild.members:
-			if not member.bot:
-				await member.add_roles(closedRole, reason="Setup command for the activity checks run by "+str(ctx.author))
 		await editEmbed(statusEmbed, "Server setup finished!", description, 0x6cb83a)
 		
 			
