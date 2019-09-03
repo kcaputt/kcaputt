@@ -146,7 +146,8 @@ class ActivityChecks(commands.Cog):
 		activityCheckChannels.append(activityCheckChannel)
 		myResponseMessage = await sendEmbed(ctx, "Loading activity check", "This may take a while... This embed will turn green when I start... Once the check has started you can send `stop` to the channel to stop the check early. A bot admin can also stop/mass-stop the check early, for example if maintenance is needed on the bot.")
 		for member in ctx.guild.members:
-			await member.remove_roles(activeRole, closedRole, reason="Activity Check Starting...")
+			if not member.bot:
+				await member.remove_roles(activeRole, closedRole, reason="Activity Check Starting...")
 		await editEmbed(myResponseMessage, color = 0x6cb83a)
 		await sendEmbed(activityCheckChannel, "Activity Check", "Type `me`. Nothing More. Nothing Less. All messages are due within 1 day of this being sent. I will react with ✅ if it worked.", message="@everyone")
 		timeout = time.time() + 60*60*24
